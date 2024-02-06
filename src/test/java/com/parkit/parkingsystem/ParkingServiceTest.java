@@ -98,9 +98,9 @@ public class ParkingServiceTest {
     // test de l’appel de la méthode `processIncomingVehicle()` où tout se déroule comme attendu
     @Test
     public void testProcessIncomingVehicle() throws Exception {
-        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(1);
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
         when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
 
@@ -125,6 +125,19 @@ public class ParkingServiceTest {
         verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(ParkingType.BIKE);
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
         verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
+    }
+
+    // test de l’appel de la méthode `processIncomingVehicle()` où tout une erreur se produit lors de l'appel à
+    // `getNextAvailableSlot()`
+    @Test
+    public void testProcessIncomingVehicleError() throws Exception {
+        when(inputReaderUtil.readSelection()).thenReturn(1);
+        when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(-1);
+
+        parkingService.processIncomingVehicle();
+
+        verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(ParkingType.CAR);
+        assertEquals(-1, (int) parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
     }
 
 

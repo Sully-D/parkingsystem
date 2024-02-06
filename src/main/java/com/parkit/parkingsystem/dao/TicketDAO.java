@@ -84,7 +84,11 @@ public class TicketDAO {
         return false;
     }
 
+    // getNbTicket() count the number of tickets for a vehicle registration number
+    // if the number of tickets is greater than 2, the method returns true
+    // otherwise, it returns false
     public boolean getNbTicket (String vehicleRegistration){
+        int count = 0;
         Connection con = null;
         String sql = "SELECT * FROM ticket WHERE VEHICLE_REG_NUMBER = ?";
         try {
@@ -92,14 +96,20 @@ public class TicketDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, vehicleRegistration);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return true;
+            while (rs.next()){
+                count++;
             }
-        } catch (Exception ex) {
-            logger.error("error check number of tickets registered", ex);
+            dataBaseConfig.closeResultSet(rs);
+            dataBaseConfig.closePreparedStatement(ps);
+        } catch (Exception ex){
+            logger.error("Error fetching next available slot",ex);
         } finally {
             dataBaseConfig.closeConnection(con);
         }
-        return false;
+        if (count > 2){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
