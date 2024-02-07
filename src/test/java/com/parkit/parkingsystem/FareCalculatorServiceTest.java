@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class FareCalculatorServiceTest {
@@ -139,10 +140,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0.75 * Fare.BIKE_RATE_PER_HOUR) * 100) / 100;
+        double price = (0.75 * Fare.BIKE_RATE_PER_HOUR) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -166,10 +169,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0.75 * Fare.CAR_RATE_PER_HOUR) * 100) / 100;
+        double price = (0.75 * Fare.CAR_RATE_PER_HOUR) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -193,10 +198,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((24 * Fare.CAR_RATE_PER_HOUR) * 100) / 100;
+        double price = (24 * Fare.CAR_RATE_PER_HOUR) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected maximum daily fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -220,10 +227,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0 * Fare.CAR_RATE_PER_HOUR) * 100) / 100;
+        double price = (0 * Fare.CAR_RATE_PER_HOUR) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected free parking fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -247,10 +256,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0 * Fare.BIKE_RATE_PER_HOUR) * 100) / 100;
+        double price = (0 * Fare.BIKE_RATE_PER_HOUR) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected free parking fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -274,10 +285,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket, true);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0.75 * Fare.CAR_RATE_PER_HOUR - 0.75 * Fare.CAR_RATE_PER_HOUR * 0.05) * 100) / 100;
+        double price = (0.75 * Fare.CAR_RATE_PER_HOUR - 0.75 * Fare.CAR_RATE_PER_HOUR * 0.05) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
@@ -301,10 +314,12 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket, true);
 
         // Rounding to 2 decimal places
-        double roundedPrice = (double) Math.round((0.75 * Fare.BIKE_RATE_PER_HOUR - 0.75 * Fare.BIKE_RATE_PER_HOUR * 0.05) * 100) / 100;
+        double price = (0.75 * Fare.BIKE_RATE_PER_HOUR - 0.75 * Fare.BIKE_RATE_PER_HOUR * 0.05) * 100 / 100;
+        BigDecimal roundedPrice = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPrice, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice());
     }
 
     /**
