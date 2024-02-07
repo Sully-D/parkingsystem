@@ -3,61 +3,81 @@ package com.parkit.parkingsystem.service;
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
+import java.math.BigDecimal;
+
 public class FareCalculatorService {
 
-    public void calculateFare(Ticket ticket, boolean discount){
-        if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
-            throw new IllegalArgumentException("Out time provided is incorrect:"+ticket.getOutTime().toString());
+    /**
+     * Calculates the fare for a parking ticket based on the duration and parking type.
+     *
+     * @param ticket   The parking ticket for which to calculate the fare.
+     * @param discount Indicates whether a discount should be applied.
+     * @throws IllegalArgumentException If the provided exit time is incorrect or earlier than the entry time.
+     */
+    public void calculateFare(Ticket ticket, boolean discount) throws IllegalArgumentException {
+        // Checks if the exit time is correct
+        if (ticket.getOutTime() == null || ticket.getOutTime().before(ticket.getInTime())) {
+            throw new IllegalArgumentException("Incorrect exit time: " + ticket.getOutTime().toString());
         }
 
+        // Gets entry and exit times in milliseconds
         long inHour = ticket.getInTime().getTime();
         long outHour = ticket.getOutTime().getTime();
 
-        //TODO: Some tests are failing here. Need to check if this logic is correct
-        double duration = (double)(outHour - inHour) / (60 * 60 * 1000); // Convert millis to hours
+        // Calculates duration in hours
+        double duration = (double) (outHour - inHour) / (60 * 60 * 1000);
 
-        switch (ticket.getParkingSpot().getParkingType()){
+        // Selects the parking type
+        switch (ticket.getParkingSpot().getParkingType()) {
             case CAR: {
-                if (duration <= 0.5){
-                    ticket.setPrice(0 * Fare.CAR_RATE_PER_HOUR);
-                    // arondissement à 2 chiffres après la virgule
-                    ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                // Calculates fare for cars
+                if (duration <= 0.5) {
+                    ticket.setPrice(0);
                     break;
                 }
-                if (discount){
-                    ticket.setPrice((duration * Fare.CAR_RATE_PER_HOUR - (duration * Fare.CAR_RATE_PER_HOUR * 0.05)));
-                    // arondissement à 2 chiffres après la virgule
-                    ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                if (discount) {
+                    double totalPrice = (duration * Fare.CAR_RATE_PER_HOUR - (duration * Fare.CAR_RATE_PER_HOUR * 0.05));
+                    BigDecimal roundedPrice = BigDecimal.valueOf(totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+                    double roundedPriceDouble = roundedPrice.doubleValue();
+                    ticket.setPrice(roundedPriceDouble);
                     break;
                 }
-                ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-                // arondissement à 2 chiffres après la virgule
-                ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                double totalPrice = duration * Fare.CAR_RATE_PER_HOUR;
+                BigDecimal roundedPrice = BigDecimal.valueOf(totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+                double roundedPriceDouble = roundedPrice.doubleValue();
+                ticket.setPrice(roundedPriceDouble);
                 break;
             }
             case BIKE: {
-                if (duration <= 0.5){
-                    ticket.setPrice(0 * Fare.CAR_RATE_PER_HOUR);
-                    // arondissement à 2 chiffres après la virgule
-                    ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                // Calculates fare for bikes
+                if (duration <= 0.5) {
+                    ticket.setPrice(0);
                     break;
                 }
-                if (discount){
-                    ticket.setPrice((duration * Fare.BIKE_RATE_PER_HOUR) - (duration * Fare.BIKE_RATE_PER_HOUR * 0.05));
-                    // arondissement à 2 chiffres après la virgule
-                    ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                if (discount) {
+                    double totalPrice = (duration * Fare.BIKE_RATE_PER_HOUR) - (duration * Fare.BIKE_RATE_PER_HOUR * 0.05);
+                    BigDecimal roundedPrice = BigDecimal.valueOf(totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+                    double roundedPriceDouble = roundedPrice.doubleValue();
+                    ticket.setPrice(roundedPriceDouble);
                     break;
                 }
-                ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
-                // arondissement à 2 chiffres après la virgule
-                ticket.setPrice((double) Math.round(ticket.getPrice() * 100) / 100);
+                double totalPrice = (duration * Fare.BIKE_RATE_PER_HOUR);
+                BigDecimal roundedPrice = BigDecimal.valueOf(totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+                double roundedPriceDouble = roundedPrice.doubleValue();
+                ticket.setPrice(roundedPriceDouble);
                 break;
             }
-            default: throw new IllegalArgumentException("Unkown Parking Type");
+            default:
+                throw new IllegalArgumentException("Unknown parking type");
         }
     }
 
-    public void calculateFare(Ticket ticket){
+    /**
+     * Calculates the fare for a parking ticket without a discount.
+     *
+     * @param ticket The parking ticket for which to calculate the fare.
+     */
+    public void calculateFare(Ticket ticket) {
         calculateFare(ticket, false);
     }
 }
