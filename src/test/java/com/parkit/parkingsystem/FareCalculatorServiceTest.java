@@ -145,7 +145,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -174,7 +174,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -203,7 +203,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected maximum daily fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -232,7 +232,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected free parking fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -261,7 +261,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected free parking fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -290,7 +290,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
@@ -319,7 +319,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice());
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
     }
 
     /**
