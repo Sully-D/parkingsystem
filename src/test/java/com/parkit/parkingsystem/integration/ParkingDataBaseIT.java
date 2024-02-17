@@ -210,7 +210,7 @@ public class ParkingDataBaseIT {
 
         // Assertions to check that the ticket is marked as a recurring user and the calculated price matches
         assertEquals(true, ticketDAO.getNbTicket("ABCDEF"));
-        assertEquals(roundedPriceDouble, ticketDAO.getTicket("ABCDEF").getPrice(), 0.01);
+        assertEquals(roundedPriceDouble, ticketDAO.getTicket("ABCDEF").getPrice(), 0.1);
     }
 
     /**

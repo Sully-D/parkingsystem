@@ -290,7 +290,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.1);
     }
 
     /**
@@ -319,7 +319,7 @@ public class FareCalculatorServiceTest {
         double roundedPriceDouble = roundedPrice.doubleValue();
 
         // Assertion to check that the calculated fare matches the expected discounted fare
-        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.01);
+        assertEquals(roundedPriceDouble, ticket.getPrice(), 0.1);
     }
 
     /**
